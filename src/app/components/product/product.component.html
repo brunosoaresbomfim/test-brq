@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <label class="fw-bold">Produto</label>
+      <select class="form-select" [(ngModel)]="productSelected" (change)="selectedItem()" >
+        <option *ngFor="let i of products" [ngValue]="i">{{ i.name }}</option>
+      </select>
+    </div>
+    <div class="col-3">
+      <label class="fw-bold" for="customer">Quantidade</label>
+      <div class="row">
+        <div class="quantity">
+          <button class="btn" (click)="desc()"><span class="material-icons">remove</span></button>
+          <input type="text" [value]="quantity" class="form-control" style="width: 100px" />
+          <button class="btn" (click)="asc()"><span class="material-icons">add</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <label class="fw-bold">Preço</label>
+      <input type="text" class="form-control" (change)="verifyPrice()" [(ngModel)]="productSelected && productSelected.price" prefix="R$ " mask="separator.2" separatorLimit="100" />
+    </div>
+    <div class="col-3 sugestion">
+      <button class="btn" [disabled]="!productSelected" (click)="backPrice()">preço sugerido</button>
+    </div>
+  </div>
+</div>
