@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from 'src/app/shared/models/Product';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { CheckoutService } from 'src/app/shared/services/checkout.service';
 
 @Component({
   selector: 'app-product',
@@ -15,9 +16,12 @@ export class ProductComponent implements OnInit {
   quantity: number = 1;
   priceOld: number = 0;
 
-  constructor(private alertService: AlertService) { }
+  constructor(private alertService: AlertService, private checkoutService: CheckoutService) { }
 
   ngOnInit() {
+    // if() {
+    // }
+    this.products = this.products = this.checkoutService.products;
   }
 
   backPrice() {
@@ -33,6 +37,7 @@ export class ProductComponent implements OnInit {
 
   selectedItem() {
     //console.log(this.productSelected)
+    this.checkoutService.transportProduct(this.productSelected);
     this.priceOld = this.productSelected.price;
   }
 

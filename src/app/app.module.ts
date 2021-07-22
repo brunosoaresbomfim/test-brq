@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 
 import { NgxMaskModule } from "ngx-mask";
 
@@ -11,7 +11,8 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CheckoutService } from "./shared/services/checkout.service";
 
 @NgModule({
   declarations: [AppComponent, CustomerComponent, ProductComponent],
@@ -19,13 +20,15 @@ import { FormsModule } from "@angular/forms";
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     MatIconModule,
     MatSnackBarModule,
     NgxMaskModule.forRoot({
       dropSpecialCharacters: false,
     }),
   ],
-  providers: [],
+  providers: [CheckoutService],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

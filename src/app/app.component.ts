@@ -1,37 +1,42 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Customer } from './shared/models/Customer';
-import { Product } from './shared/models/Product';
+import { Component, Input, OnInit } from "@angular/core";
+import { Customer } from "./shared/models/Customer";
+import { Product } from "./shared/models/Product";
+import { CheckoutService } from "./shared/services/checkout.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-
-  products: Product[] = [new Product('Refrigerante (2L)', 6.00),
-  new Product('Arroz (1kg)', 8.00),
-  new Product('Geléia (500g)', 7.00),
-  new Product('Farinha Láctea (500g)', 15.00),
-  new Product('Água (1,5L)', 4.00),
-  new Product('Ovo (dúzia)', 12.00),
-  new Product('Requeijão (200g)', 5.00)];
+  products: Product[];
   itens: number[] = [];
 
-  @Input('customer')
   customer: Customer;
+  productRemoved: Product;
 
-  constructor(){ }
-
-  ngOnInit(): void {  }
-
-  add() {
-    this.itens.push(this.itens.length + 1)
-    console.log(this.customer);
+  constructor(private checkoutService: CheckoutService) {
+    this.products = this.checkoutService.getProducts();
+    this.customer = this.checkoutService.customers();
   }
 
-  removeItem(i: number){
-    console.log(i)
-    console.log(this.itens)
+  ngOnInit(): void {
+    this.checkoutService.transferCustomer.subscribe(res => this.customer = res);
+  }
+
+  add() {
+    this.itens.push(this.itens.length + 1);
+    //console.log(this.customer);
+    this.checkoutService.transferProduct.subscribe(res => this.productRemoved = res);
+    this.checkoutService.removeProductSelect(this.productRemoved);
+  }
+
+  removeItem(i: number) {
+    this.itens.splice(this.itens.findIndex(e => e === i) - 1 ,1);
+
+    if(this.productRemoved) {
+      this.products.push(this.productRemoved);
+    }
+    //console.log(this.productRemoved)
   }
 }
