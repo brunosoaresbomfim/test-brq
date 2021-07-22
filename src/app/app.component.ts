@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Customer } from './shared/models/Customer';
 import { Product } from './shared/models/Product';
 
 @Component({
@@ -17,12 +18,16 @@ export class AppComponent implements OnInit {
   new Product('Requeijão (200g)', 5.00)];
   itens: number[] = [];
 
+  @Input('customer')
+  customer: Customer;
+
   constructor(){ }
 
   ngOnInit(): void {  }
 
   add() {
-    this.itens.push(1)
+    this.itens.push(this.itens.length + 1)
+    console.log(this.customer);
   }
 
   removeItem(i: number){

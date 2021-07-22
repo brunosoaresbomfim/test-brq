@@ -27,6 +27,7 @@ export class ProductComponent implements OnInit {
   verifyPrice() {
     if(this.productSelected.price > this.priceOld) {
       this.alertService.error('Você não pode escolher um preço acima/igual ao preço original.');
+      this.productSelected.price = this.priceOld;
     }
   }
 
